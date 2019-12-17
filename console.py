@@ -43,6 +43,40 @@ class HBNBCommand(cmd.Cmd):
                 raise SyntaxError()
             my_list = line.split(" ")
             obj = eval("{}()".format(my_list[0]))
+            if len(my_list) >= 1:
+                arg_dict = {}
+                for i in my_list[1:]:
+                    arg = i.split('=')
+                    arg[1] = arg[1].replace('"', "")
+                    arg_dict[arg[0]] = arg[1]
+            for k, v in arg_dict.items():
+                if hasattr(obj, k):
+                    # if '"' in v[1:-1]:
+                        # v = v[1:-1].replace('"', '\"')
+                    if '_' in v:
+                        v = v.replace('_', ' ')
+                    if v.isdigit():
+                        if "." in v:
+                            v = float(v)
+                        elif "_id" not in k:
+                            v = int(v)
+                setattr(obj, k, v)
+            #newString = " "
+            #newString = newString.join(my_list[1:])
+            #final_dict = {}
+            #for item in newString.split():
+            #    pair = item.split('=')
+            #    final_dict.update({pair[0]: pair[1]})
+            #obj = eval("{}()".format(my_list[0]))
+            #for key, value in final_dict.items():
+                #print("este es el valor {}".format(value))
+            #    final_value = value.replace('"', "")
+            #    final_value = value.replace("_", " ")
+            #    if value.isdigit():
+            #        if "." in value:
+            #            value = float(value)
+            #        elif "_id" not in k:
+            #           value = int(value)
             obj.save()
             print("{}".format(obj.id))
         except SyntaxError:
