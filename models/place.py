@@ -2,6 +2,9 @@
 """This is the place class"""
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, Float, ForeignKey
+from sqlalchemy.orm import relationship, backref
+
+
 class Place(BaseModel, Base):
     """This is the class for Place
         Attributes:
@@ -20,6 +23,8 @@ class Place(BaseModel, Base):
     __tablename__ = "places"
     city_id = Column(String(60), ForeignKey("cities.id"), nullable=False)
     user_id = Column(String(60), ForeignKey("users.id"), nullable=False)
+    reviews = relationship("Review", backref="place", cascade="all, delete-orphan")
+
     name = Column(String(128), nullable=False)
     description = Column(String(1024), nullable=True)
     number_rooms = Column(Integer, nullable=False, default=0)
@@ -29,3 +34,15 @@ class Place(BaseModel, Base):
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
     amenity_ids = []
+
+    @property
+    def reviews(self):
+        """ getter attribute for reviews of places """
+        obj = storage.all()
+        reviews = []
+        print("OBJ:", obj)
+        print("MY DICT:", my_dict)
+        for key, value in my_dict.items():
+            if "Review" in key and value.place_id == self.id:
+                reviews.append(value)
+        return reviews

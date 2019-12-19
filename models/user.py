@@ -13,6 +13,7 @@ class User(BaseModel, Base):
     """
     __tablename__ = "users"
     places = relationship("Place", backref="user", cascade="all, delete-orphan")
+    reviews = relationship("Review", backref="user", cascade="all, delete-orphan")
     email = Column(String(128), nullable=False)
     password = Column(String(128), nullable=False)
     first_name = Column(String(128), nullable=True)
