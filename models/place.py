@@ -23,7 +23,7 @@ class Place(BaseModel, Base):
     __tablename__ = "places"
     city_id = Column(String(60), ForeignKey("cities.id"), nullable=False)
     user_id = Column(String(60), ForeignKey("users.id"), nullable=False)
-    reviews = relationship("Review", backref="place", cascade="all, delete-orphan")
+    
 
     name = Column(String(128), nullable=False)
     description = Column(String(1024), nullable=True)
@@ -34,6 +34,8 @@ class Place(BaseModel, Base):
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
     amenity_ids = []
+
+    reviews = relationship("Review", backref="place", cascade="all, delete-orphan")
 
     @property
     def reviews(self):
