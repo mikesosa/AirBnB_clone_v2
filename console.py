@@ -41,14 +41,18 @@ class HBNBCommand(cmd.Cmd):
         try:
             if not line:
                 raise SyntaxError()
-            my_list = line.split(" ")
+
+            my_list = line.split(" ")\
+
             obj = eval("{}()".format(my_list[0]))
+
             if len(my_list) >= 1:
                 arg_dict = {}
                 for i in my_list[1:]:
                     arg = i.split('=')
                     arg[1] = arg[1].replace('"', "")
                     arg_dict[arg[0]] = arg[1]
+
             for k, v in arg_dict.items():
                 if hasattr(obj, k):
                     if '_' in v:
@@ -60,7 +64,9 @@ class HBNBCommand(cmd.Cmd):
                             v = int(v)
                 setattr(obj, k, v)
             obj.save()
+            print("fue a save")
             print("{}".format(obj.id))
+            
         except SyntaxError:
             print("** class name missing **")
         except NameError:
