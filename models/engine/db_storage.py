@@ -10,12 +10,13 @@ from models.city import City
 from models.user import User
 from models.place import Place
 from models.review import Review
+from models.amenity import Amenity
 
 
 class DBStorage:
     __engine = None;
     __session = None;
-    __clsdict = {"State": State, "City": City, "User": User, "Place": Place, "Review": Review}
+    __clsdict = {"State": State, "City": City, "User": User, "Place": Place, "Review": Review, "Amenity": Amenity}
     def __init__(self):
         """ the initializersz
         """
