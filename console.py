@@ -62,12 +62,11 @@ class HBNBCommand(cmd.Cmd):
                 if hasattr(obj, k):
                     if '_' in v:
                         v = v.replace('_', ' ')
-                    elif "." in v:
-                        tokens=split('.')
-                        if len(tokens) == 2 and tokens[0].isdigit() and tokens[1].isdigit():
+                    elif v.isdigit():
+                        if "." in v:
                             v = float(v)
-                    elif "_id" not in k:
-                        v = int(v)
+                        elif "_id" not in k:
+                            v = int(v)
                 setattr(obj, k, v)
             obj.save()
             print("{}".format(obj.id))
