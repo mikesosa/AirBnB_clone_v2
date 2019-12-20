@@ -17,8 +17,13 @@ class HBNBCommand(cmd.Cmd):
     """this class is entry point of the command interpreter
     """
     prompt = "(hbnb) "
-    all_classes = {"BaseModel", "User", "State", "City",
-                   "Amenity", "Place", "Review"}
+    all_classes = {"BaseModel", 
+                   "User", 
+                   "State", 
+                   "City",
+                   "Amenity", 
+                   "Place", 
+                   "Review"}
 
     def emptyline(self):
         """Ignores empty spaces"""
@@ -174,15 +179,15 @@ class HBNBCommand(cmd.Cmd):
             my_list = split(line, " ")
             if my_list[0] not in self.all_classes:
                 raise NameError()
-            if len(my_list) < 2:
+            elif len(my_list) < 2:
                 raise IndexError()
             objects = storage.all()
             key = my_list[0] + '.' + my_list[1]
             if key not in objects:
                 raise KeyError()
-            if len(my_list) < 3:
+            elif len(my_list) < 3:
                 raise AttributeError()
-            if len(my_list) < 4:
+            elif len(my_list) < 4:
                 raise ValueError()
             v = objects[key]
             try:
