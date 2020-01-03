@@ -36,7 +36,5 @@ def do_deploy(archive_path):
         # create a new sym link that links to new version of code
         run("sudo ln -s {} /data/web_static/current".format(completePath))
     except:
-        print("No funcino")
         return False
-    print("funciono")
     return True
