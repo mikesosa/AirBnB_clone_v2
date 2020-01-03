@@ -5,6 +5,7 @@ an archive to your web servers, using the function do_deploy:
 """
 
 from fabric.api import *
+from datetime import datetime
 from os import path
 
 
