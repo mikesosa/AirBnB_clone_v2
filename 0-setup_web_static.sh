@@ -11,6 +11,7 @@ sudo mkdir -p /data/web_static/
 sudo mkdir -p /data/web_static/releases/
 sudo mkdir -p /data/web_static/shared/
 sudo mkdir -p /data/web_static/releases/test/
+sudo touch /data/web_static/releases/test/index.html
 sudo echo "<h1>Holberton School! :)</h1>" | sudo tee -a /data/web_static/releases/test/index.html
 sudo ln -sfn /data/web_static/releases/test/ /data/web_static/current
 sudo chown -R ubuntu /data/
