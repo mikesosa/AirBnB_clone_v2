@@ -19,28 +19,28 @@ def do_deploy(archive_path):
     if path.isfile(archive_path) is False:
         return False
     # this will be the web_static_NUMBERSSSS.tgz
-    filetgz = archive_path.split("/")[-1]
+    fileName = archive_path.split("/")[-1]
     # and this will be the stuff without the dot extension
-    filename = filetgz.replace('.tgz', '')
-    newdir = "/data/web_static/releases/" + filename
+    noExtension = fileName.replace('.tgz', '')
+    completePath = "/data/web_static/releases/" + noExtension
 
     try:
         # overwrites pre-existing remote files without request confirmation
         put(archive_path, "/tmp/")
         # make the directory on the server
-        run("sudo mkdir {}/".format(newdir))
+        run("sudo mkdir {}/".format(completePath))
         # unzips the archive to the folder on the webserver
-        run("sudo tar -xzf /tmp/{} -C {}/".format(filetgz, newdir))
+        run("sudo tar -xzf /tmp/{} -C {}/".format(fileName, completePath))
         # deletes archive from web server
-        run("sudo rm /tmp/{}".format(filetgz))
+        run("sudo rm /tmp/{}".format(fileName))
         # moves the archive out of web static to be removed
-        run("sudo mv {}/web_static/* {}/".format(newdir, newdir))
+        run("sudo mv {}/web_static/* {}/".format(completePath, completePath))
         # removes the archive
-        run("sudo rm -rf {}/web_static".format(newdir))
+        run("sudo rm -rf {}/web_static".format(completePath))
         # deletes the symbolic link to the web server
         run("sudo rm -rf /data/web_static/current")
         # create a new sym link that links to new version of code
-        run("sudo ln -s {} /data/web_static/current".format(newdir))
+        run("sudo ln -s {} /data/web_static/current".format(completePath))
         print("New version deployed!")
         return True
     except:
