@@ -20,7 +20,7 @@ def do_deploy(archive_path):
         # and this will be the stuff without the dot extension
         completePath = "/data/web_static/releases/" + fileName.split(".")[0]
         # overwrites pre-existing remote files without request confirmation
-        put(archive_path, "/tmp/", use_sudo=True)
+        put(archive_path, "/tmp/")
         # make the directory on the server
         run("sudo mkdir -p {}".format(completePath))
         # unzips the archive to the folder on the webserver
