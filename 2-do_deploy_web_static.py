@@ -7,7 +7,7 @@ an archive to your web servers, using the function do_deploy:
 from fabric.api import *
 env.hosts = ['34.74.238.86', '35.196.226.115']
 env.user = "ubuntu"
-env.key_filename = "~/.ssh/holberton"
+# env.key_filename = "~/.ssh/holberton"
 
 
 def do_deploy(archive_path):
