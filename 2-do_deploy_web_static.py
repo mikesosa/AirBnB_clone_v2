@@ -5,6 +5,10 @@ an archive to your web servers, using the function do_deploy:
 """
 
 from fabric.api import *
+from datetime import datetime
+from os import path
+
+
 env.hosts = ['34.74.238.86', '35.196.226.115']
 env.user = "ubuntu"
 # env.key_filename = "~/.ssh/holberton"
@@ -15,26 +19,29 @@ def do_deploy(archive_path):
     if path.isfile(archive_path) is False:
         return False
     # this will be the web_static_NUMBERSSSS.tgz
-    fileName = archive_path.split("/")[-1]
+    filetgz = archive_path.split("/")[-1]
     # and this will be the stuff without the dot extension
-    completePath = "/data/web_static/releases/" + fileName.split(".")[0]
+    filename = filetgz.replace('.tgz', '')
+    newdir = "/data/web_static/releases/" + filename
+
     try:
         # overwrites pre-existing remote files without request confirmation
-        put(archive_path, "/tmp/", use_sudo=True)
+        put(archive_path, "/tmp/")
         # make the directory on the server
-        run("sudo mkdir -p {}".format(completePath))
+        run("sudo mkdir {}/".format(newdir))
         # unzips the archive to the folder on the webserver
-        run("sudo tar -xzf /tmp/{} -C {}".format(fileName, completePath))
+        run("sudo tar -xzf /tmp/{} -C {}/".format(filetgz, newdir))
         # deletes archive from web server
-        run("sudo rm /tmp/{}".format(fileName))
+        run("sudo rm /tmp/{}".format(filetgz))
         # moves the archive out of web static to be removed
-        run("sudo mv {}/web_static/* {}/".format(completePath, completePath))
+        run("sudo mv {}/web_static/* {}/".format(newdir, newdir))
         # removes the archive
-        run("sudo rm -rf {}/web_static".format(completePath))
+        run("sudo rm -rf {}/web_static".format(newdir))
         # deletes the symbolic link to the web server
         run("sudo rm -rf /data/web_static/current")
         # create a new sym link that links to new version of code
-        run("sudo ln -s {} /data/web_static/current".format(completePath))
+        run("sudo ln -s {} /data/web_static/current".format(newdir))
+        print("New version deployed!")
         return True
     except:
         return False
