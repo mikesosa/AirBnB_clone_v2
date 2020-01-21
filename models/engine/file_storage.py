@@ -74,3 +74,7 @@ class FileStorage:
             self.__objects.pop(key)
             # Save in file
             self.save()
+
+    def close(self):
+        """ clling reload """
+        self.reload()
