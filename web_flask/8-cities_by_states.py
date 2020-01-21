@@ -80,6 +80,7 @@ def hello7():
 def hello8():
     """ returning cities by states """
     statesArr = list(storage.all("State").values())
+    statesArr.sort(key=lambda statesArr: statesArr.name)
     for state in statesArr:
         state.cities.sort(key=lambda statesArr: statesArr.name)
     return render_template('8-cities_by_states.html', states=statesArr)
