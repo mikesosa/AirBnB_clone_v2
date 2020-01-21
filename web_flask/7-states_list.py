@@ -72,7 +72,7 @@ def teardown_DB(response_or_exec):
 @app.route("/states_list")
 def hello7():
     statesArr = list(storage.all("State").values())
-    staresArr.sort(key=lambda statesArr: statesArr.name)
+    statesArr.sort(key=lambda statesArr: statesArr.name)
     return render_template('7-states_list.html', states=statesArr)
 
 
